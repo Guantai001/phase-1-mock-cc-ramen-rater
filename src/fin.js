@@ -1,7 +1,11 @@
 
+// write your code here
+// 
+const ramenMenu = document.querySelector('#ramen-menu')
+
 // load up the dom
 document.addEventListener('DOMContentLoaded', (event) => {
-   displayRamen();
+    console.log('DOM loaded');
 })
 
 //fetch ramen data
@@ -64,32 +68,7 @@ function createRamenForm() {
     })
 }
 
-function deleteRamen(ramen) {
-    fetch(`https://localhost:3000/ramens/${ramen.id}`, {
-        method: "DETELE",
-        headers: {
-            "Content-Type": "application/json",
-
-        },
-        body: JSON.stringify(ramen),
-
-    }
-    )
-    .then(response => response.json()
-    .then(ramen => {
-        ramen.remove();
-
-    
-    })
-
-
-
-    )
- }
-
-
 
 //initialize
-// displayRamen()
-// // createRamenForm()
-// // deleteRamen()
+displayRamen()
+createRamenForm()
