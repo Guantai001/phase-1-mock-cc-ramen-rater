@@ -1,7 +1,8 @@
 
 // load up the dom
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', function () {
    displayRamen();
+   
 })
 
 //fetch ramen data
@@ -17,6 +18,7 @@ function getAllRamen(ramenArr) {
 
 //display images to DOM, append images to div
 function getRamen(ramenObj) {
+    const ramenMenu = document.querySelector('#ramen-menu')
     const ramenImg = document.createElement('img')
     ramenImg.src = ramenObj.image
     ramenMenu.append(ramenImg)
@@ -25,7 +27,7 @@ function getRamen(ramenObj) {
     ramenImg.addEventListener('click', () => {
         const img = document.querySelector('.detail-image')
         img.src = ramenObj.image
-        img.alt = ramenObj.name
+        // img.alt = ramenObj.name
 
         const ramenName = document.querySelector('.name')
         ramenName.textContent = ramenObj.name
@@ -38,12 +40,15 @@ function getRamen(ramenObj) {
 
         const commentDisplay = document.querySelector('#comment-display')
         commentDisplay.innerText = ramenObj.comment
+        
+      
     })
 }
 
 //create from
 function createRamenForm() {
     const newRamenForm = document.getElementById('new-ramen')
+    const ramenMenu = document.querySelector('#ramen-menu')
 
     newRamenForm.addEventListener('submit', (event) => {
     event.preventDefault() // stop the page from refreshing on form submit
@@ -57,39 +62,25 @@ function createRamenForm() {
     newRamenObject.comment = document.querySelector('#new-comment').value
     console.log(newRamenObject)
 
+    // post new ramen object to server
+    fetch('http://localhost:3000/ramens', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newRamenObject)
+    })
+    .then(res => res.json())
+    .then(console.log)
+
+
+
     // display new ramen in #ramen-menu (append?)
     const newRamenItem = document.createElement('img')
     newRamenItem.src = newRamenObject.image
     ramenMenu.append(newRamenItem)
     })
-}
-
-function deleteRamen(ramen) {
-    fetch(`https://localhost:3000/ramens/${ramen.id}`, {
-        method: "DETELE",
-        headers: {
-            "Content-Type": "application/json",
-
-        },
-        body: JSON.stringify(ramen),
-
-    }
-    )
-    .then(response => response.json()
-    .then(ramen => {
-        ramen.remove();
 
     
-    })
-
-
-
-    )
- }
-
-
-
-//initialize
-// displayRamen()
-// // createRamenForm()
-// // deleteRamen()
+}
+createRamenForm()

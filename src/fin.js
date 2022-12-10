@@ -42,10 +42,11 @@ function getRamen(ramenObj) {
 
         const commentDisplay = document.querySelector('#comment-display')
         commentDisplay.innerText = ramenObj.comment
+        
     })
 }
 
-//create from
+// create from
 function createRamenForm() {
     const newRamenForm = document.getElementById('new-ramen')
 
